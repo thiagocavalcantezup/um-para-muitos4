@@ -20,6 +20,8 @@ public class ArtigoDTO {
     @Enumerated(EnumType.STRING)
     private TipoArtigo tipo;
 
+    public ArtigoDTO() {}
+
     public ArtigoDTO(@NotBlank @Size(max = 200) String titulo,
                      @NotBlank @Size(max = 10000) String corpo, @NotNull TipoArtigo tipo) {
         this.titulo = titulo;

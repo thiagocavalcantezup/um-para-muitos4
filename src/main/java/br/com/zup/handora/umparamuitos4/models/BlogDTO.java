@@ -7,6 +7,8 @@ public class BlogDTO {
     @NotBlank
     private String nome;
 
+    public BlogDTO() {}
+
     public BlogDTO(@NotBlank String nome) {
         this.nome = nome;
     }
