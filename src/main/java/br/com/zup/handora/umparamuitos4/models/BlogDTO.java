@@ -11,6 +11,10 @@ public class BlogDTO {
         this.nome = nome;
     }
 
+    public Blog toModel() {
+        return new Blog(nome);
+    }
+
     public String getNome() {
         return nome;
     }

@@ -27,6 +27,10 @@ public class ArtigoDTO {
         this.tipo = tipo;
     }
 
+    public Artigo toModel() {
+        return new Artigo(titulo, corpo, tipo);
+    }
+
     public String getTitulo() {
         return titulo;
     }
