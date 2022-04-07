@@ -1,6 +1,6 @@
 package br.com.zup.handora.umparamuitos4.models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -25,7 +25,7 @@ public class Blog {
     private String nome;
 
     @Column(nullable = false)
-    private LocalDate criadoEm = LocalDate.now();
+    private LocalDateTime criadoEm = LocalDateTime.now();
 
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "blog")
     private Set<Artigo> artigos = new HashSet<>();
