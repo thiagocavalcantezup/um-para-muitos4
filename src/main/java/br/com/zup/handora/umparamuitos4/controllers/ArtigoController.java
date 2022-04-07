@@ -18,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.zup.handora.umparamuitos4.models.Artigo;
 import br.com.zup.handora.umparamuitos4.models.ArtigoDTO;
 import br.com.zup.handora.umparamuitos4.models.Blog;
+import br.com.zup.handora.umparamuitos4.repositories.ArtigoRepository;
 import br.com.zup.handora.umparamuitos4.repositories.BlogRepository;
 
 @RestController
@@ -27,9 +28,11 @@ public class ArtigoController {
     public final static String BASE_URI = "/artigos";
 
     private final BlogRepository blogRepository;
+    private final ArtigoRepository artigoRepository;
 
-    public ArtigoController(BlogRepository blogRepository) {
+    public ArtigoController(BlogRepository blogRepository, ArtigoRepository artigoRepository) {
         this.blogRepository = blogRepository;
+        this.artigoRepository = artigoRepository;
     }
 
     @Transactional
@@ -47,6 +50,7 @@ public class ArtigoController {
 
         Artigo artigo = artigoDTO.toModel();
         blog.adicionar(artigo);
+        artigo = artigoRepository.save(artigo);
         blogRepository.save(blog);
 
         URI location = uriComponentsBuilder.path(
