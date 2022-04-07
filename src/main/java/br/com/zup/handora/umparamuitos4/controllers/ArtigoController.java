@@ -18,7 +18,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.zup.handora.umparamuitos4.models.Artigo;
 import br.com.zup.handora.umparamuitos4.models.ArtigoDTO;
 import br.com.zup.handora.umparamuitos4.models.Blog;
-import br.com.zup.handora.umparamuitos4.repositories.ArtigoRepository;
 import br.com.zup.handora.umparamuitos4.repositories.BlogRepository;
 
 @RestController
@@ -28,18 +27,16 @@ public class ArtigoController {
     public final static String BASE_URI = "/artigos";
 
     private final BlogRepository blogRepository;
-    private final ArtigoRepository artigoRepository;
 
-    public ArtigoController(BlogRepository blogRepository, ArtigoRepository artigoRepository) {
+    public ArtigoController(BlogRepository blogRepository) {
         this.blogRepository = blogRepository;
-        this.artigoRepository = artigoRepository;
     }
 
     @Transactional
     @PostMapping
-    public ResponseEntity<Void> postMethodName(@PathVariable Long blogId,
-                                               @RequestBody @Valid ArtigoDTO artigoDTO,
-                                               UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Void> create(@PathVariable Long blogId,
+                                       @RequestBody @Valid ArtigoDTO artigoDTO,
+                                       UriComponentsBuilder uriComponentsBuilder) {
         Blog blog = blogRepository.findById(blogId)
                                   .orElseThrow(
                                       () -> new ResponseStatusException(
@@ -50,11 +47,10 @@ public class ArtigoController {
 
         Artigo artigo = artigoDTO.toModel();
         blog.adicionar(artigo);
-        artigo = artigoRepository.save(artigo);
         blogRepository.save(blog);
 
         URI location = uriComponentsBuilder.path(
-            BlogController.BASE_URI + "/{blogId}" + BASE_URI + "{/id}"
+            BlogController.BASE_URI + "/{blogId}" + BASE_URI + "/{id}"
         ).buildAndExpand(blogId, artigo.getId()).toUri();
 
         return ResponseEntity.created(location).build();

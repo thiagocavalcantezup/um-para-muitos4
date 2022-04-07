@@ -27,7 +27,7 @@ public class Blog {
     @Column(nullable = false)
     private LocalDateTime criadoEm = LocalDateTime.now();
 
-    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "blog")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "blog")
     private Set<Artigo> artigos = new HashSet<>();
 
     /**
